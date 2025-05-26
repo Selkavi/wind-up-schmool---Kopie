@@ -1,6 +1,6 @@
 import discord
 from discord import app_commands
-import json, random
+import json, random, os
 
 intents = discord.Intents.default()
 intents.message_content = True
@@ -113,4 +113,8 @@ class MyClient(discord.Client):
             await message.channel.send(embed=embed)
 
 client = MyClient()
+token = os.environ.get("DISCORD_TOKEN")
+if not token:
+    raise RuntimeError("DISCORD_TOKEN nicht gefunden in den Umgebungsvariablen")
+client.run(token)
 client.run("DISCORD_TOKEN")
